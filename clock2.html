@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<html>
+<head>
+	<meta http-equiv="Content-Type"	content="text/html;charset=iso-8859-1">
+	<title>Text Clock</title>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" 
+ type="text/css" rel="stylesheet" media="screen">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.js"></script>
+
+<style type="text/css">
+
+.affiche {
+	background : lightgrey;
+	color : black;	
+	}
+.hide {
+	background : white;
+	color : lightgrey;
+	}
+.txt {
+	background : white;
+	font-weight: bold;
+	color : red;
+	}
+.sec, .hr, .mn {
+	background : white;
+	color : lightgreen;
+	}
+
+.affiche { font-size: 2.4em; }
+.hide  { font-size: 2.4em; }
+.txt  { font-size: 2.4em; }
+.sec,.hr, .mn  { font-size: 2.4em; }
+
+</style>
+
+<script>
+
+</script>
+
+
+<script type="text/javascript">
+
+var jsalarm={
+	padfield:function(f){
+		return (f<10)? "0"+f : f
+	},
+	showcurrenttime:function(){
+		var dateobj=new Date()
+		var hour=dateobj.getHours();
+		
+		$('#hr').html(this.padfield(dateobj.getHours()));
+		$('#mn').html(":"+this.padfield(dateobj.getMinutes()));
+		$('#sec').html(":"+this.padfield(dateobj.getSeconds()));
+		if (hour > 11) { 
+		$('#pm').removeClass('hide');
+		$('#pm').addClass('affiche');
+		$('#am').removeClass('affiche');
+		$('#am').addClass('hide');
+		}
+		else
+		{
+		$('#pm').removeClass('affiche');
+		$('#pm').addClass('hide');
+		$('#am').removeClass('hide');
+		$('#am').addClass('affiche');
+		}
+		var minute=dateobj.getMinutes();
+		var minutenow='';
+		var hournow='';
+		var tranche="am";
+		if (hour>12) {hour=hour-12; tranche="pm"} else {tranche="am"};
+		if (minute >= 33) { 
+		$('#to').removeClass('hide');
+		$('#to').addClass('affiche');
+		$('#past').removeClass('affiche');
+		$('#past').addClass('hide');
+		hour = hour +1;
+		
+		}
+		else
+		{
+		$('#to').removeClass('affiche');
+		$('#to').addClass('hide');
+		$('#past').removeClass('hide');
+		$('#past').addClass('affiche');
+		}
+		
+		if ((minute >= 58) || (minute < 3)){
+		$('#to').removeClass('affiche');
+		$('#to').addClass('hide');
+		$('#past').removeClass('affiche');
+		$('#past').addClass('hide');
+		$('#five').removeClass('affiche');
+		$('#five').addClass('hide');
+		}
+		
+		if (minute >= 3 && minute < 8) {
+		$('#five').removeClass('hide');
+		$('#five').addClass('affiche');
+		}
+		
+		if (minute >= 8 && minute < 13) { 
+		$('#five').removeClass('affiche');
+		$('#five').addClass('hide');
+		minutenow='#ten';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute >= 13 && minute < 18) { 
+		$('#ten').removeClass('affiche');
+		$('#ten').addClass('hide');
+		minutenow='#quarter';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute >= 18 && minute < 23) { 
+		$('#quarter').removeClass('affiche');
+		$('#quarter').addClass('hide');
+		minutenow='#twenty';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute >= 23 && minute < 28) { 
+		$('#twenty').removeClass('hide');
+		$('#twenty').addClass('affiche');
+		$('#tiret').removeClass('hide');
+		$('#tiret').addClass('affiche');
+		$('#five').removeClass('hide');
+		$('#five').addClass('affiche');
+		}
+		if (minute >= 28 && minute < 33) { 
+		$('#twenty').removeClass('affiche');
+		$('#twenty').addClass('hide');
+		$('#tiret').removeClass('affiche');
+		$('#tiret').addClass('hide');
+		minutenow='#half';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute >= 33 && minute < 38) { 
+		$('#half').removeClass('affiche');
+		$('#half').addClass('hide');
+		minutenow='#twenty';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		$('#tiret').removeClass('hide');
+		$('#tiret').addClass('affiche');
+		$('#five').removeClass('hide');
+		$('#five').addClass('affiche');
+		}
+		if (minute >= 38 && minute < 43) { 
+		minutenow='#twenty';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		$('#tiret').removeClass('affiche');
+		$('#tiret').addClass('hide');
+		$('#five').removeClass('affiche');
+		$('#five').addClass('hide');
+		}
+		if (minute >= 43 && minute < 48) { 
+		$('#twenty').removeClass('affiche');
+		$('#twenty').addClass('hide');
+		$('#tiret').removeClass('affiche');
+		$('#tiret').addClass('hide');
+		minutenow='#quarter';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute >= 48 && minute < 53) { 
+		$('#quarter').removeClass('affiche');
+		$('#quarter').addClass('hide');
+		minutenow='#ten';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute >= 53 && minute < 58) { 
+		$('#ten').removeClass('affiche');
+		$('#ten').addClass('hide');
+		minutenow='#five';
+		$(minutenow).removeClass('hide');
+		$(minutenow).addClass('affiche');
+		}
+		if (minute==0 || minute==5 || minute==10 || minute==15 || minute==20 || minute==25 || minute==30 || minute==35 || minute==40 || minute==45 || minute==50 || minute==55)
+		{
+		$('#about').removeClass('affiche');
+		$('#about').addClass('hide');
+		$('#exact').removeClass('hide');
+		$('#exact').addClass('affiche');
+		}
+		else
+		{
+		$('#about').removeClass('hide');
+		$('#about').addClass('affiche');
+		$('#exact').removeClass('affiche');
+		$('#exact').addClass('hide');
+		}
+		
+		if (hour == 0) { 
+		$('#eleven').removeClass('affiche');
+		$('#eleven').addClass('hide');
+		$('#oclock').removeClass('affiche');
+		$('#oclock').addClass('hide');
+		hournow='#midnight';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 1) { 
+		$('#midnight').removeClass('affiche');
+		$('#midnight').addClass('hide');
+		$('#noon').removeClass('affiche');
+		$('#noon').addClass('hide');
+		hournow='#one';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 2) { 
+		$('#one').removeClass('affiche');
+		$('#one').addClass('hide');
+		hournow='#two';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 3) { 
+		$('#two').removeClass('affiche');
+		$('#two').addClass('hide');
+		hournow='#three';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 4) { 
+		$('#three').removeClass('affiche');
+		$('#three').addClass('hide');
+		hournow='#four';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 5) { 
+		$('#four').removeClass('affiche');
+		$('#four').addClass('hide');
+		hournow='#hfive';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 6) { 
+		$('#hfive').removeClass('affiche');
+		$('#hfive').addClass('hide');
+		hournow='#six';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 7) { 
+		$('#six').removeClass('affiche');
+		$('#six').addClass('hide');
+		hournow='#seven';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 8) { 
+		$('#seven').removeClass('affiche');
+		$('#seven').addClass('hide');
+		hournow='#eight';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 9) { 
+		$('#eight').removeClass('affiche');
+		$('#eight').addClass('hide');
+		hournow='#nine';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 10) { 
+		$('#nine').removeClass('affiche');
+		$('#nine').addClass('hide');
+		hournow='#hten';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 11) { 
+		$('#hten').removeClass('affiche');
+		$('#hten').addClass('hide');
+		hournow='#eleven';
+		$(hournow).removeClass('hide');
+		$(hournow).addClass('affiche');
+		}
+		if (hour == 12 && tranche=="am") { 
+		$('#eleven').removeClass('affiche');
+		$('#eleven').addClass('hide');
+		$('#noon').removeClass('hide');
+		$('#noon').addClass('affiche');
+		}	
+	},
+	init:function(){
+		jsalarm.showcurrenttime()
+		jsalarm.timer=setInterval(function(){jsalarm.showcurrenttime()}, 1000)
+	}
+}
+
+</script>
+</head>
+
+<body>
+<div>
+<span id="bf" class="txt">TI</span>
+<span id="now" class="hide">NOW</span>
+<span id="it" class="affiche">IT</span>
+
+<span id="is" class="affiche">IS</span>
+<span id="about" class="affiche">ABOUT</span>
+</div>
+<div>
+<span id="x" class="txt">ME</span>
+<span id="half" class="hide">HALF</span>
+
+<span id="twenty" class="hide">TWENTY</span>
+<span id="tiret" class="hide">-</span>
+<span id="five" class="hide">FIVE</span>
+<span class="hide"> </span>
+</div>
+<div>
+<span id="x" class="txt">RO</span>
+<span id="ten" class="hide">TEN</span>
+
+<span id="quarter" class="hide">A QUARTER</span>
+</div>
+<div>
+<span id="f" class="txt">LLS</span>
+<span id="past" class="hide">PAST</span>
+
+<span id="to" class="hide">TO</span>
+<span id="nine" class="hide">NINE</span>
+<span id="one" class="hide">ONE</span>
+</div>
+<div>
+<span id="dc" class="txt">A</span>
+<span id="six" class="hide">SIX</span>
+<span id="noon" class="hide">NOON</span>
+
+<span id="midnight" class="hide">MIDNIGHT</span>
+</div>
+<div>
+<span id="f" class="txt">ND</span>
+<span id="four" class="hide">FOUR</span>
+
+<span id="three" class="hide">THREE</span>
+<span id="hfive" class="hide">FIVE</span>
+</div>
+<div>
+<span id="eru" class="txt">ER</span>
+<span id="two" class="hide">TWO</span>
+
+<span id="eight" class="hide">EIGHT</span>
+<span id="eleven" class="hide">ELEVEN</span>
+</div>
+<div>
+<span id="er" class="txt">OD</span>
+<span id="seven" class="hide">SEVEN</span>
+
+<span id="hr" class="hr">hr</span>
+<span id="mn" class="mn">mn</span>
+<span id="sec" class="sec">sec</span>
+</div>
+<div>
+<span id="se" class="txt">ES</span>
+<span id="twelve" class="hide">TWELVE</span>
+
+<span id="hten" class="hide">TEN</span>
+<span id="pm" class="hide">PM</span>
+<span id="am" class="hide">AM</span>
+
+</div>
+<div>
+<span id="se" class="txt">ALL</span>
+<span id="oclock" class="hide">O'CLOCK</span>
+
+<span id="exact" class="hide">EXACTLY</span>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+jsalarm.init()
+
+</script>
+
+</body>
+</html>
